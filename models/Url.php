@@ -51,4 +51,22 @@ class Url extends \yii\db\ActiveRecord
     {
         return new UrlQuery(get_called_class());
     }
+
+    public function __construct(array $config = [])
+    {
+        parent::__construct($config);
+
+        $this->short_url = $this->generateShortUrl(Yii::$app->params['shortUrlLength']);
+    }
+
+    protected function generateShortUrl($length)
+    {
+        $randomString = Yii::$app->getSecurity()->generateRandomString($length);
+
+        if(!$this::findOne(['short_url' => $randomString])) {
+            return $randomString;
+        }
+
+        return $this->generateShortUrl($length);
+    }
 }
