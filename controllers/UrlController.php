@@ -29,9 +29,25 @@ class UrlController extends Controller
         ];
     }
 
+
+    /**
+         * {@inheritdoc}
+         */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+           ],
+        ];
+    }
     /**
      * Lists all Url models.
      * @return mixed
+     */
+    /**
+     * @param $shortUrl
+     * @return string
      */
     public function actionIndex()
     {
@@ -42,6 +58,19 @@ class UrlController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * @param $shortUrl
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionRedirect($shortUrl)
+    {
+        if ($model = Url::findOne(['short_url' => $shortUrl])) {
+            $this->redirect($model->url);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
