@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -25,7 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'url:url',
-            'short_url:url',
+            [
+                'label' => 'Short Url',
+                'format' => 'url',
+                'value' => function($data){
+                    return Url::home(true) . $data->short_url;
+                }
+
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

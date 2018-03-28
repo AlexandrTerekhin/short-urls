@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Url */
@@ -30,7 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'url:url',
-            'short_url:url',
+            [
+                'label' => 'Short Url',
+                'format' => 'url',
+                'value' => function($data){
+                    return Url::home(true) . $data->short_url;
+                }
+
+            ],
         ],
     ]) ?>
 

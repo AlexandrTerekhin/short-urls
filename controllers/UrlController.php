@@ -94,6 +94,7 @@ class UrlController extends Controller
     public function actionCreate()
     {
         $model = new Url();
+        $model->short_url = $model->generateShortUrl();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
