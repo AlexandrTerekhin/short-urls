@@ -28,6 +28,7 @@ class Url extends \yii\db\ActiveRecord
     {
         return [
             [['url', 'short_url'], 'string', 'max' => 255],
+            [['url'], 'url'],
         ];
     }
 
